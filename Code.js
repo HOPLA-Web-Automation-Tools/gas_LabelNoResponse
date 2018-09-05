@@ -23,7 +23,7 @@ function doGet(e) {
         deleteAllTriggers()
 
 
-        ScriptApp.newTrigger("main_noresponse").timeBased().atHour(noResponse_checkFrequency_HOUR).everyDays(1).create();
+//        ScriptApp.newTrigger("main_noresponse").timeBased().atHour(noResponse_checkFrequency_HOUR).everyDays(1).create();
         var content = "<p>" + scriptName + " has been installed on your email " + user_email + ". " +
             "It is currently set to label no-response emails every 1AM.</p>" +
             '<p>You can change these settings by clicking the HOPLA Tools extension icon or HOPLA Tools Settings on gmail.</p>';        
