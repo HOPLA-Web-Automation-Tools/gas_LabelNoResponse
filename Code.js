@@ -15,6 +15,18 @@ function test() {
   Logger.log('I said ' + str);
 }
 global.doGet = doGet;
+global.main_noresponse = main_noresponse;
+global.deleteAllTriggers = deleteAllTriggers;
+global.test = test;
+global.processUnresponded = processUnresponded;
+global.subtract = subtract;
+global.isMe = isMe;
+global.getEmailAddresses = getEmailAddresses;
+global.threadHasLabel = threadHasLabel;
+global.markUnresponded = markUnresponded;
+global.getLabel = getLabel;
+global.cleanUp = cleanUp;
+
 function doGet(e) {
   if (e.parameter.setup) { // SETUP
     deleteAllTriggers();
