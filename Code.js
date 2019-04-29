@@ -42,12 +42,13 @@ function doGet(e) {
     var authInfo = ScriptApp.getAuthorizationInfo(ScriptApp.AuthMode.FULL);
     return HtmlService.createHtmlOutput("Hello " + Session.getEffectiveUser().getEmail() + "! oAuth status: " + authInfo.getAuthorizationStatus());
   } else if (e.parameter.noresponse_saveVariables) { // SET NO RESPONSE VARIABLES
-    userProperties.setProperty("unrespondedLabel", e.parameter.nr_unresponsedlabel || unrespondedLabel);
-    userProperties.setProperty("ignoreLabel", e.parameter.nr_ignoreLabel || ignoreLabel);
-    userProperties.setProperty("minTime", (e.parameter.nr_minTime + "d") || minTime);
-    userProperties.setProperty("maxTime", (e.parameter.nr_maxTime + "d") || maxTime);
-    userProperties.setProperty("noResponse_checkFrequency_HOUR", (e.parameter.nr_checkFrequency_HOUR) || noResponse_checkFrequency_HOUR);
-    userProperties.setProperty("status", (e.parameter.nr_status) || script_status);
+    var oSave = JSON.parse(e.parameter.noresponse_saveVariables);
+    userProperties.setProperty("unrespondedLabel", oSave.nr_unresponsedlabel || unrespondedLabel);
+    userProperties.setProperty("ignoreLabel", oSave.nr_ignoreLabel || ignoreLabel);
+    userProperties.setProperty("minTime", (oSave.nr_minTime + "d") || minTime);
+    userProperties.setProperty("maxTime", (oSave.nr_maxTime + "d") || maxTime);
+    userProperties.setProperty("noResponse_checkFrequency_HOUR", (oSave.nr_checkFrequency_HOUR) || noResponse_checkFrequency_HOUR);
+    userProperties.setProperty("status", (oSave.nr_status) || script_status);
 
 
     unrespondedLabel = userProperties.getProperty("unrespondedLabel");
@@ -59,7 +60,7 @@ function doGet(e) {
 
     deleteAllTriggers();
 
-    if (e.parameter.nr_status === 'enabled') {
+    if (oSave.nr_status === 'enabled') {
       ScriptApp.newTrigger("main_noresponse").timeBased().atHour(noResponse_checkFrequency_HOUR).everyDays(1).create();
     }
     // return HtmlService.createHtmlOutput("No-Response settings has been saved.");
